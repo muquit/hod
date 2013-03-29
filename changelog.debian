@@ -1,0 +1,5 @@
+hod (1.7-ubuntu) unstable; urgency=low
+
+  * Built debian binary package for hod v1.7
+
+ -- Muhammad Muquit <muquit@muquit.com>  Sun, 13 May 2012 15:01:38 -0400

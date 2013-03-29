@@ -1,0 +1,39 @@
+##----------------------------------------------------------------------------
+# Created with genmake.pl v1.1 on Mon Sep  6 09:12:23 2004
+# genmake.pl home: http://muquit.com/muquit/software/
+# Copryright: GNU GPL (http://www.gnu.org/copyleft/gpl.html)
+##----------------------------------------------------------------------------
+
+CC= cl
+#DEFS=  -nologo -DSTRICT -G3 -Ow -W3 -Zp -Tp
+DEFS=  -nologo -G3
+PROGNAME= hod.exe
+LINKER=link -nologo
+
+INCLUDES=  -I. 
+
+# don't define -DSYS_WIN32.. win2k complains
+DEFINES= $(INCLUDES) $(DEFS) -DWINNT=1 
+
+CFLAGS= $(DEFINES)
+#GUIFLAGS=user32.lib gdi32.lib winmm.lib comdlg32.lib comctl32.lib
+#WINSOCK_LIB=wsock32.lib
+LIBS=$(WINSOCK_LIB) $(GUIFLAGS)
+RC=rc
+RCVARS=-r -DWIN32
+
+SRCS = hod.c 
+
+OBJS = hod.obj 
+
+.c.obj:
+	$(CC) $(CFLAGS) -c $< -Fo$@
+
+all: $(PROGNAME)
+
+$(PROGNAME) : $(OBJS)
+	$(LINKER) $(OBJS) /OUT:$(PROGNAME) $(LIBS)
+
+clean:
+	del $(OBJS) $(PROGNAME) core
+

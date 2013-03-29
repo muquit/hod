@@ -1,0 +1,139 @@
+=head1 NAME
+
+hod - A command line tool to dump data in Hex or in Octal format
+
+=head1 SYNOPIS
+
+ hod v1.7
+ http://www.muquit.com/
+
+ usage: ../hod [options] <filename>
+ Where the options are:
+  -v      : show version information
+  -h      : show this help
+  -i      : output C header file
+  -o      : dump in octal
+  -8      : show as block of 8 bytes
+  -x str  : convert a hex input to decimal
+  -d      : show offsets in decimal
+  -s      : show identical output lines
+  -r      : reverse hod hexdump to binary
+  -w      : reverse regular hex bytes to binary
+
+ If no filename specified, it will read from stdin
+
+ Example:
+ $ hod file
+ $ hod < file
+ $ cat file | hod
+ $ cat file | hod -
+ $ hod < file 
+ $ hod -o file
+ $ echo "hello" | hod
+ $ echo -n "hello" | hod
+ $ hod -x 1c0
+ 1c0 : 448
+ $ echo "0a 01 ff ef 0b" | hod -w > bin.bin
+ $ hod bin.bin | hod -r > bin_again.bin
+
+=head1 DESCRIPTION
+
+B<hod> is a simple program to dump data in Hex or or in Octal format.
+
+=head1 EXAMPLES
+
+ $ hod square.gif  
+      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f   0123456789abcdef
+   0: 47 49 46 38 39 61 10 00 10 00 f3 00 00 00 00 00  GIF89a..........
+  10: 10 0f 0e 20 1e 1b 30 2d 29 3f 3b 36 4f 4a 44 5f  ... ..0-)?;6OJD_
+  20: 59 52 6f 68 5f 7f 77 6d 8f 86 7a 9f 95 88 af a4  YRoh_.wm..z.....
+  30: 96 be b2 a3 ce c1 b1 de d0 be ee df cc 21 f9 04  .............!..
+  40: 00 00 00 00 00 2c 00 00 00 00 10 00 10 00 00 04  .....,..........
+  50: 4e f0 c9 49 eb 73 38 eb ed 9a ff 60 d8 30 64 69  N..I.s8....`.0di
+  60: 9e cc a2 ae 6c bb 28 70 2c cf 4a 62 df 78 9e 20  ....l.(p,.Jb.x. 
+  70: 7c ef ff 88 83 70 48 2c 1e 0c c8 a4 72 69 28 38  |....pH,....ri(8
+  80: 9f d0 68 81 40 ad 5a af 84 81 76 cb ed 0e 04 e0  ..h.@.Z...v.....
+  90: b0 78 2c 08 98 cf e8 74 00 c0 6e bb df 80 08 00  .x,....t..n.....
+  a0: 3b                                               ;   
+
+ $ hod -d square.gif
+      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f   0123456789abcdef
+   0: 47 49 46 38 39 61 10 00 10 00 f3 00 00 00 00 00  GIF89a..........
+  16: 10 0f 0e 20 1e 1b 30 2d 29 3f 3b 36 4f 4a 44 5f  ... ..0-)?;6OJD_
+  32: 59 52 6f 68 5f 7f 77 6d 8f 86 7a 9f 95 88 af a4  YRoh_.wm..z.....
+  48: 96 be b2 a3 ce c1 b1 de d0 be ee df cc 21 f9 04  .............!..
+  64: 00 00 00 00 00 2c 00 00 00 00 10 00 10 00 00 04  .....,..........
+  80: 4e f0 c9 49 eb 73 38 eb ed 9a ff 60 d8 30 64 69  N..I.s8....`.0di
+  96: 9e cc a2 ae 6c bb 28 70 2c cf 4a 62 df 78 9e 20  ....l.(p,.Jb.x. 
+ 112: 7c ef ff 88 83 70 48 2c 1e 0c c8 a4 72 69 28 38  |....pH,....ri(8
+ 128: 9f d0 68 81 40 ad 5a af 84 81 76 cb ed 0e 04 e0  ..h.@.Z...v.....
+ 144: b0 78 2c 08 98 cf e8 74 00 c0 6e bb df 80 08 00  .x,....t..n.....
+ 160: 3b                                          
+
+ $ hod -o square.gif 
+      0   1   2   3   4   5   6   7    01234567
+   0: 107 111 106 070 071 141 020 000  GIF89a..
+  10: 020 000 363 000 000 000 000 000  ........
+  20: 020 017 016 040 036 033 060 055  ... ..0-
+  30: 051 077 073 066 117 112 104 137  )?;6OJD_
+  40: 131 122 157 150 137 177 167 155  YRoh_.wm
+  50: 217 206 172 237 225 210 257 244  ..z.....
+  60: 226 276 262 243 316 301 261 336  ........
+  70: 320 276 356 337 314 041 371 004  .....!..
+ 100: 000 000 000 000 000 054 000 000  .....,..
+ 110: 000 000 020 000 020 000 000 004  ........
+ 120: 116 360 311 111 353 163 070 353  N..I.s8.
+ 130: 355 232 377 140 330 060 144 151  ...`.0di
+ 140: 236 314 242 256 154 273 050 160  ....l.(p
+ 150: 054 317 112 142 337 170 236 040  ,.Jb.x. 
+ 160: 174 357 377 210 203 160 110 054  |....pH,
+ 170: 036 014 310 244 162 151 050 070  ....ri(8
+ 200: 237 320 150 201 100 255 132 257  ..h.@.Z.
+ 210: 204 201 166 313 355 016 004 340  ..v.....
+ 220: 260 170 054 010 230 317 350 164  .x,....t
+ 230: 000 300 156 273 337 200 010 000  ..n.....
+ 240: 073                              ;       
+
+ $ hod -i square.gif > square.h
+ $ cat square.h
+   /*
+    ** This file is created by hod 1.7 by running:
+    **  hod -i square.gif
+    ** on Sun May 13 14:44:25 2012
+    ** hod is a free software available from: http://www.muquit.com/
+    */
+
+    #ifndef square_gif_H
+    #define square_gif_H 1
+
+    const unsigned char square_gif[]=
+    {
+    0x47,0x49,0x46,0x38,0x39,0x61,0x10,0x00,0x10,0x00,0xf3,0x00,0x00,0x00,0x00,
+    0x00,0x10,0x0f,0x0e,0x20,0x1e,0x1b,0x30,0x2d,0x29,0x3f,0x3b,0x36,0x4f,0x4a,
+    0x44,0x5f,0x59,0x52,0x6f,0x68,0x5f,0x7f,0x77,0x6d,0x8f,0x86,0x7a,0x9f,0x95,
+    0x88,0xaf,0xa4,0x96,0xbe,0xb2,0xa3,0xce,0xc1,0xb1,0xde,0xd0,0xbe,0xee,0xdf,
+    0xcc,0x21,0xf9,0x04,0x00,0x00,0x00,0x00,0x00,0x2c,0x00,0x00,0x00,0x00,0x10,
+    0x00,0x10,0x00,0x00,0x04,0x4e,0xf0,0xc9,0x49,0xeb,0x73,0x38,0xeb,0xed,0x9a,
+    0xff,0x60,0xd8,0x30,0x64,0x69,0x9e,0xcc,0xa2,0xae,0x6c,0xbb,0x28,0x70,0x2c,
+    0xcf,0x4a,0x62,0xdf,0x78,0x9e,0x20,0x7c,0xef,0xff,0x88,0x83,0x70,0x48,0x2c,
+    0x1e,0x0c,0xc8,0xa4,0x72,0x69,0x28,0x38,0x9f,0xd0,0x68,0x81,0x40,0xad,0x5a,
+    0xaf,0x84,0x81,0x76,0xcb,0xed,0x0e,0x04,0xe0,0xb0,0x78,0x2c,0x08,0x98,0xcf,
+    0xe8,0x74,0x00,0xc0,0x6e,0xbb,0xdf,0x80,0x08,0x00,0x3b,
+    };
+    const unsigned int square_gif_len=161;
+
+    #endif /* square_gif_H */
+
+=head1 LICENSE
+
+GNU GPL
+
+=head1 SEE ALSO
+
+Please look at the web page for latest version and documentation:
+L<http://muquit.com/muquit/software/hod/hod.html>
+
+=head1 AUTHOR
+
+hod is written by Muhammad Muquit E<lt>muquit@muquit.comE<gt>
+Homepage: L<http://www.muquit.com/>.
