@@ -17,7 +17,7 @@ Suggestions, bug reports are always welcome.
       -r      : reverse hod hexdump to binary
       -w      : reverse regular hex bytes to binary
 
-If no filename specified, it will read from stdin
+If no filename specified, input will be read from stdin
 
     Example:
     $ hod file
