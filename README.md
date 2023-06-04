@@ -1,10 +1,12 @@
-#Introduction
+# Introduction
+
 **hod** is a very simple, nice little hexadecimal and octal data dumper. It is very useful when dealing with binary data. I wrote it long long time ago, because I did not like the complexities and the output format of od and such programs. I hope you will find it useful.
 
 Suggestions, bug reports are always welcome.
-#Synopsis
 
-    usage: hod [options] 
+# Synopsis
+
+    usage: hod [options]
     Where the options are:
       -v      : show version information
       -h      : show this help
@@ -24,7 +26,7 @@ If no filename specified, input will be read from stdin
     $ hod < file
     $ cat file | hod
     $ cat file | hod -
-    $ hod < file 
+    $ hod < file
     $ hod -o file
     $ echo "hello" | hod
     $ echo -n "hello" | hod
@@ -33,10 +35,11 @@ If no filename specified, input will be read from stdin
     $ echo "0a 01 ff ef 0b" | hod -w > bin.bin
     $ hod bin.bin | hod -r > bin_again.bin
 
-    Note: -r and -w works with hexadecimal only. 
+    Note: -r and -w works with hexadecimal only.
 
-#Examples
-##hexdump a binary file
+# Examples
+
+## hexdump a binary file
 
     $ hod foo.bin
           0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f   0123456789abcdef
@@ -49,8 +52,9 @@ If no filename specified, input will be read from stdin
       60: 39 b8 cd e6 13 3d ee dc f1 dd 33 b6 9e 5b f1 ca  9....=....3..[..
       70: 88 1a 2f b6 ea d9 2b 3b 7f c5 07 af 67 2f 5b d6  ../...+;....g/[.
       80: d4 f9 69 95 6a c7 8a a0 39 2a 7e 70 fe 1b 40 f4  ..i.j...9*~p..@.
-      90: 06 3d 86 10 2e 00                                .=....          
-##Octal dump
+      90: 06 3d 86 10 2e 00                                .=....
+
+## Octal dump
 
     $ hod -o foo.bin
           0   1   2   3   4   5   6   7    01234567
@@ -73,9 +77,9 @@ If no filename specified, input will be read from stdin
      200: 324 371 151 225 152 307 212 240  ..i.j...
      210: 071 052 176 160 376 033 100 364  9*~p..@.
      220: 006 075 206 020 056 000 006 075  .=.....=
-     230: 206 020 056 000                  ....    
+     230: 206 020 056 000                  ....
 
-##See the offset in decimal
+## See the offset in decimal
 
     $ hod -d foo.bin
           0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f   0123456789abcdef
@@ -88,7 +92,7 @@ If no filename specified, input will be read from stdin
       96: 39 b8 cd e6 13 3d ee dc f1 dd 33 b6 9e 5b f1 ca  9....=....3..[..
      112: 88 1a 2f b6 ea d9 2b 3b 7f c5 07 af 67 2f 5b d6  ../...+;....g/[.
      128: d4 f9 69 95 6a c7 8a a0 39 2a 7e 70 fe 1b 40 f4  ..i.j...9*~p..@.
-     144: 06 3d 86 10 2e 00                                .=....          
+     144: 06 3d 86 10 2e 00                                .=....
 
     $ hod x.db
           0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f   0123456789abcdef
@@ -113,9 +117,10 @@ If no filename specified, input will be read from stdin
     3000: fd ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
     3010: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
        *
+
 Here `*` indicates identical lines. To show identical lines use the flag -s
 
-##Create C header file
+## Create C header file
 
     $ hod -i square.gif > square.h
 
@@ -149,19 +154,23 @@ The header file `square.h` will look like:
 
     #endif /* square_gif_H */
 
-#Compile/Install
-##Linux/Unix/Mac OS X
+# Compile/Install
+
+## Linux/Unix/Mac OS X
+
 Go to the source directory and type:
 
     $ sh ./configure
     $ make clean
     $ make
     # make install
+
 or
 
-    $ sudo make install 
+    $ sudo make install
 
-##Linux Debian package
+## Linux Debian package
+
 A pre-built Debian package is available. To install the package, type
 
     sudo dpkg -i hod_1.7-ubuntu_i386.deb
@@ -170,7 +179,8 @@ To remove the package, type:
 
     sudo dpkg -r hod
 
-##Microsoft Windows
+## Microsoft Windows
+
 A compiled binary for MS Windows is already supplied. However, if you need to modify something or want to compile it yourself, you will need MS Visual Studio (I used MS Visual Studio 10, freely available from Microsoft). To compile, open a command shell and type:
 
     c:\> nmake -f Makefile.win clean

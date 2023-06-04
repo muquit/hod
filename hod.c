@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #ifdef HAVE_TIME_H
 #include <time.h>
@@ -40,9 +41,6 @@
 
 #define REVERSE_HOD     0x01
 #define REVERSE_RAW     0x02
-
-static FILE *hod_open_file(const char *filename);
-
 
 static int offset_in_decimal=0;
 
@@ -95,27 +93,6 @@ static void usage(char *progname)
         HOD_VERSION_S,
         progname);
        exit(0);
-}
-
-/*
-**  Open a file and returns the FILE pointer
-**
-**  Parameters:
-**      filename    to open
-**
-**  Limitations and Comments:
-**      In windows file will be open in binary mode
-**
-**  Return Values:
-**      pointer to FILE on success, NULL on failure
-**
-**  Development History:
-**           who    when           why
-**  muquit@muquit   Mar-21-2010    first cut
-*/
-
-static FILE *hod_open_file(const char *filename)
-{
 }
 
 static int print_hexstr_to_dec(char *hex_str)
@@ -537,12 +514,10 @@ static void print_c_header(char *filename,FILE *out)
 "/*\n"
 "** This file is created by hod %s by running:\n"
 "**  hod -i %s\n"
-"** on %s"
 "** hod is a free software available from: http://www.muquit.com/\n"
 "*/\n\n",
     HOD_VERSION_S,
-    filename,
-    (char *) ctime(&t));
+    filename);
 
     (void) fprintf(out,
 "#ifndef %s_H\n"
