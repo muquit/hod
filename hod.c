@@ -66,7 +66,7 @@ static void usage(char *progname)
 
     (void) fprintf(stderr, 
      "hod v%s\n"
-     "http://www.muquit.com/\n\n"
+     "https://www.muquit.com/\n\n"
      "usage: %s [options] <filename>\n"
      "Where the options are:\n"
      " -v      : show version information\n"
@@ -440,6 +440,60 @@ static char *_rm_white_spaces(char *str)
     return (str);
 }   
 
+static void print_golang_package_name(const char* filepath, FILE *fp)
+{
+    char
+        package_name[256];
+    const char*
+        filename;
+    char*
+        dot_pos;
+    int
+        i;
+    
+    /* find the last slash or backslash to get just the filename */
+    filename = strrchr(filepath, '/');
+    if (!filename)
+    {
+        filename = strrchr(filepath, '\\');  /* Windows path separator */
+    }
+    if (filename)
+    {
+        filename++;  /* skip the slash */
+    } else
+    {
+        filename = filepath;  /* No path separator found */
+    }
+    
+    /* Copy filename safely and remove extension */
+    strncpy(package_name, filename, sizeof(package_name) - 1);
+    package_name[sizeof(package_name) - 1] = '\0';  /* null terminate */
+    
+    dot_pos = strrchr(package_name, '.');
+    if (dot_pos)
+    {
+        *dot_pos = '\0';  /* Terminate string at the dot */
+    }
+    
+    /* Capitalize first letter and make it a valid Go package name*/
+    if (package_name[0] != '\0')
+    {
+        package_name[0] = toupper(package_name[0]);
+        
+        // Replace any non-alphanumeric characters with underscores
+        for (i = 1; package_name[i] != '\0'; i++)
+        {
+            if (!isalnum(package_name[i]))
+            {
+                package_name[i] = '_';
+            }
+        }
+    }
+    
+    /* Output the package declaration */
+    (void) fprintf(fp, "package %s\n\n", package_name);
+}
+
 
 static void print_hex_bytes(char *filename,FILE *out, const int what)
 {
@@ -520,7 +574,7 @@ static void print_hex_bytes(char *filename,FILE *out, const int what)
 "/*\n"
 "** This file is created by hod %s by running:\n"
 "**  hod -i %s\n"
-"** hod is a free software available from: http://www.muquit.com/\n"
+"** hod is a free software available from: https://www.muquit.com/\n"
 "*/\n\n",
     HOD_VERSION_S,
     filename);
@@ -531,7 +585,7 @@ static void print_hex_bytes(char *filename,FILE *out, const int what)
 "//\n"
 "// This file is created by hod %s by running:\n"
 "//  hod -g %s\n"
-"// hod is a free software available from: http://www.muquit.com/\n"
+"// hod is a free software available from: https://www.muquit.com/\n"
 "//\n\n",
     HOD_VERSION_S,
     filename);
@@ -547,7 +601,8 @@ static void print_hex_bytes(char *filename,FILE *out, const int what)
     }
     else if(what == Go)
     {
-    (void) fprintf(out,
+        print_golang_package_name(filename, out);
+        (void) fprintf(out,
 "var Data []byte = []byte {");
     }
             
