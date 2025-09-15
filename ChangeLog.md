@@ -1,4 +1,10 @@
+1.8
+===
+* Add flag -g to create byte array for go
+_(Sep-15-2025)_
+
 1.7
+===
 * Added flag -i to create C header file. Added man page and install target.  
 _(Apr-04-2012)_
 

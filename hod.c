@@ -33,7 +33,7 @@
 #include <ctype.h>
 #endif /* HAVE_CTYPE_H */
 
-#define HOD_VERSION_S   "1.7"
+#define HOD_VERSION_S   "1.8"
 
 #define MTOLOWER(c)  (c >= 'A' && c <= 'Z' ? c + ('a' - 'A') : c)
 #define MHEX2_VAL(s)  \
@@ -41,6 +41,9 @@
 
 #define REVERSE_HOD     0x01
 #define REVERSE_RAW     0x02
+
+#define C  0x01
+#define Go 0x02
 
 static int offset_in_decimal=0;
 
@@ -69,6 +72,7 @@ static void usage(char *progname)
      " -v      : show version information\n"
      " -h      : show this help\n"
      " -i      : output C header file\n"
+     " -g      : output golang byte array\n"
      " -o      : dump in octal\n"
      " -8      : show as block of 8 bytes\n"
      " -x str  : convert a hex input to decimal\n"
@@ -437,7 +441,7 @@ static char *_rm_white_spaces(char *str)
 }   
 
 
-static void print_c_header(char *filename,FILE *out)
+static void print_hex_bytes(char *filename,FILE *out, const int what)
 {
     FILE 
         *fp=NULL;
@@ -510,6 +514,8 @@ static void print_c_header(char *filename,FILE *out)
     }
     t=time(NULL);
 
+    if (what == C)
+    {
     (void) fprintf(out,
 "/*\n"
 "** This file is created by hod %s by running:\n"
@@ -518,12 +524,33 @@ static void print_c_header(char *filename,FILE *out)
 "*/\n\n",
     HOD_VERSION_S,
     filename);
+    }
+    else if (what == Go)
+    {
+    (void) fprintf(out,
+"//\n"
+"// This file is created by hod %s by running:\n"
+"//  hod -g %s\n"
+"// hod is a free software available from: http://www.muquit.com/\n"
+"//\n\n",
+    HOD_VERSION_S,
+    filename);
+    }
 
+    if (what == C)
+    {
     (void) fprintf(out,
 "#ifndef %s_H\n"
 "#define %s_H 1\n\n"
 "const unsigned char %s[]=\n"
 "{", pbuf,pbuf,pbuf);
+    }
+    else if(what == Go)
+    {
+    (void) fprintf(out,
+"var Data []byte = []byte {");
+    }
+            
 
     while((c=fgetc(fp)) != EOF)
     {
@@ -531,11 +558,18 @@ static void print_c_header(char *filename,FILE *out)
             (void) fprintf(out,"\n");
         (void) fprintf(out,"0x%02x,",c);
     }
-    (void) fprintf(out,"\n%s\n","};");
-    (void) fprintf(out,
+    if (what == C)
+    {
+        (void) fprintf(out,"\n%s\n","};");
+        (void) fprintf(out,
 "const unsigned int %s_len=%d;\n\n",pbuf,i);
     (void) fprintf(out,
 "#endif /* %s_H */\n",pbuf);
+    }
+    else
+    {
+        (void) fprintf(out,"\n%s\n","}");
+    }
 
 }
 
@@ -615,6 +649,7 @@ int main(int argc, char *argv[])
 
     int
         output_c_header=0,
+        output_go_bytes=0,
         reverse_hod=0,
         reverse_raw=0,
         e = 0;
@@ -682,6 +717,12 @@ int main(int argc, char *argv[])
             output_c_header=1;
             continue;
         }
+        if (strncmp(option,"-g",2) == 0)
+        {
+            output_go_bytes=1;
+            continue;
+        }
+
 
 
         if ((strncmp(option, "-v", 2) == 0) ||
@@ -701,7 +742,13 @@ int main(int argc, char *argv[])
     }
     if (output_c_header)
     {
-        print_c_header(filename,stdout);
+        print_hex_bytes(filename,stdout, C);
+        return(0);
+    }
+    if (output_go_bytes)
+    {
+
+        print_hex_bytes(filename,stdout, Go);
         return(0);
     }
 

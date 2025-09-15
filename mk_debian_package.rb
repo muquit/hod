@@ -30,13 +30,13 @@ class MakeDebianPackage
 
   def check
     file = "./hod"
-    if !File.exists?(file)
+    if !File.exist?(file)
       log "#{file} does not exist, compile first"
       exit(1)
     end
 
     file = "./changelog.debian"
-    if !File.exists?(file)
+    if !File.exist?(file)
       log "#{file} does not exist, compile first"
       exit(1)
     end
@@ -60,7 +60,7 @@ Depends: #{@depends}
 Description: Hexadecimal and Octal data dumper.
  Hod is a simple hexadecimal and octal data dumper. Originally I wrote 
  it because I did not like the ugly output of od. You might find it useful as 
- well.  License is GNU GPL.
+ well.  License is MIT.
 
 EOD
     f.close
@@ -77,10 +77,7 @@ hod
 
 Copyright #{year} Muhammad Muquit <muquit@muquit.com>
 
-License: GNU GPL
-
-On Debian systems, the full text of the GPL can be found at
-/usr/share/common-licenses/GPL
+License: MIT
 
 EOD
     f.close
@@ -147,7 +144,7 @@ EOD
 
   def make_package
     package_name = get_package_name
-    FileUtils.remove("./debian.deb") if File.exists?("./debian.deb")
+    FileUtils.remove("./debian.deb") if File.exist?("./debian.deb")
     cmd = "fakeroot dpkg-deb --build debian"
     log "Running: #{cmd}"
     system(cmd)
