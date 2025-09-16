@@ -32,10 +32,10 @@ class MakeMailsendPod
   end
 
   def gen_man
-    cmd = "pod2man --release \"hod #{@version}\" -c \"User Commands\" doc/hod.pod > doc/hod.1"
+    cmd = "pod2man --release \"hod #{@version}\" -c \"User Commands\" docs/hod.pod > docs/hod.1"
     system(cmd)
     # compress
-    cmd = "gzip --best -c doc/hod.1 > doc/hod.1.gz"
+    cmd = "gzip --best -c docs/hod.1 > docs/hod.1.gz"
     system(cmd)
   end
 

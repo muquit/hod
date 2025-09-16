@@ -1,17 +1,3 @@
-## Table Of Contents
-- [Introduction](#introduction)
-- [Synopsis](#synopsis)
-- [Examples](#examples)
-  - [hexdump a binary file](#hexdump-a-binary-file)
-  - [Octal dump](#octal-dump)
-  - [See the offset in decimal](#see-the-offset-in-decimal)
-  - [Create C header file](#create-c-header-file)
-  - [Create Go byte array](#create-go-byte-array)
-- [Compile/Install](#compileinstall)
-  - [Linux/Unix/Mac OS X](#linuxunixmac-os-x)
-  - [Linux Debian package](#linux-debian-package)
-  - [Microsoft Windows](#microsoft-windows)
-
 # Introduction
 
 **hod** is a very simple, nice little hexadecimal and octal data dumper. It is very useful when dealing with binary data. I wrote it long long time ago, because I did not like the complexities and the output format of od and such programs. I hope you will find it useful.
@@ -217,7 +203,7 @@ The `icon.go` file will look like:
 
 
 Look at [icon_example/](./icon_example/) directory for an example how a 16.x16 PNG file
-is converted to [Go](https://go.dev/) byte array to use as an icon for the systray.
+is converted to @GO@ byte array to use as an icon for the systray.
 
 # Compile/Install
 
@@ -250,6 +236,3 @@ A compiled binary for MS Windows is already supplied. However, if you need to mo
 
     c:\> nmake -f Makefile.win clean
     c:\> nmake -f Makefile.win
-
----
-<sub>TOC is created by https://github.com/muquit/markdown-toc-go on Sep-15-2025</sub>
