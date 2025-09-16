@@ -40,6 +40,12 @@ Suggestions, bug reports are always welcome.
     $ hod bin.bin | hod -r > bin_again.bin
 ```
 
+# Version
+
+The latst version is 1.8.
+
+Please look at @CHANGELOG@ for details.
+
 
 # Examples
 

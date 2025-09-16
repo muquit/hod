@@ -1,6 +1,7 @@
 ## Table Of Contents
 - [Introduction](#introduction)
 - [Synopsis](#synopsis)
+- [Version](#version)
 - [Examples](#examples)
   - [hexdump a binary file](#hexdump-a-binary-file)
   - [Octal dump](#octal-dump)
@@ -53,6 +54,12 @@ Suggestions, bug reports are always welcome.
     $ echo "0a 01 ff ef 0b" | hod -w > bin.bin
     $ hod bin.bin | hod -r > bin_again.bin
 ```
+
+# Version
+
+The latst version is 1.8.
+
+Please look at [ChangeLog](ChangeLog.md) for details.
 
 
 # Examples
