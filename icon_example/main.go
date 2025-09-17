@@ -2,7 +2,7 @@ package main
 
 //
 // example of using the icon by converting a PNG
-// with 'hog -d icon.png > assets/icon.go
+// with 'hod -d icon.png > assets/icon.go
 
 import (
     "github.com/getlantern/systray"
@@ -15,8 +15,8 @@ func main() {
 
 func onReady() {
     systray.SetIcon(Icon.Data)
-    systray.SetTitle("hog -g example")
-    systray.SetTooltip("hog -g example")
+    systray.SetTitle("hod -g example")
+    systray.SetTooltip("hod -g example")
     mQuit := systray.AddMenuItem("Quit", "Quit the whole app")
     mQuit.SetIcon(Icon.Data)
 
