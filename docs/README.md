@@ -42,7 +42,7 @@ Suggestions, bug reports are always welcome.
 
 # Version
 
-The latst version is 1.8.
+The latest version is 1.8.
 
 Please look at @CHANGELOG@ for details.
 
@@ -211,9 +211,27 @@ The `icon.go` file will look like:
 Look at [icon_example/](./icon_example/) directory for an example how a 16.x16 PNG file
 is converted to @GO@ byte array to use as an icon for the systray.
 
-# Compile/Install
+# Download
 
-## Linux/Unix/Mac OS X
+Pre-compiled binaries for Windows and Ubuntu are available from
+[Releases](https://github.com/muquit/hod/releases) page
+
+## Install
+### Linux Debian package
+
+A pre-built Debian package is available. To install the package, type
+
+    sudo dpkg -i hod_1.8-ubuntu_amd64.deb
+
+To remove the package, type:
+
+    sudo dpkg -r hod
+
+### Windows
+
+# Build from Source
+
+## Linux/Unix/MacOS
 
 Go to the source directory and type:
 
@@ -226,19 +244,22 @@ or
 
     $ sudo make install
 
-## Linux Debian package
-
-A pre-built Debian package is available. To install the package, type
-
-    sudo dpkg -i hod_1.7-ubuntu_i386.deb
-
-To remove the package, type:
-
-    sudo dpkg -r hod
 
 ## Microsoft Windows
 
-A compiled binary for MS Windows is already supplied. However, if you need to modify something or want to compile it yourself, you will need MS Visual Studio (I used MS Visual Studio 10, freely available from Microsoft). To compile, open a command shell and type:
+### MINGW64
+This time I used MING64 (Sep-17-2025) to compile. To compile, just like Linux/Mac:
+
+```bash
+./configure
+make
+````
+
+### Visual Studio
+A compiled binary for MS Windows is already supplied. However, if you need 
+to modify something or want to compile it yourself, you will need MS 
+Visual Studio (I used MS Visual Studio 10, freely available from Microsoft).
+To compile, open a command shell and type:
 
     c:\> nmake -f Makefile.win clean
     c:\> nmake -f Makefile.win

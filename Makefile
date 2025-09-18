@@ -42,6 +42,7 @@ deb:
 
 doc:
 	@ruby ./mk_doc.rb
+	@/bin/ls -ltr ./docs
 	echo "*** Generating README.md with TOC ..."
 	touch $(README)
 	chmod 600 $(README)

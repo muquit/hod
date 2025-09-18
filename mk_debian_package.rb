@@ -55,7 +55,7 @@ Maintainer: Muhammad Muquit <muquit@muquit.com>
 Installed-Size: 104
 Homepage: http://muquit.com/muquit/software/hod/hod.html
 Priority: optional
-Architecture: i386
+Architecture: amd64
 Depends: #{@depends}
 Description: Hexadecimal and Octal data dumper.
  Hod is a simple hexadecimal and octal data dumper. Originally I wrote 
@@ -97,7 +97,7 @@ EOD
   def copy_files
     FileUtils.copy("./hod", "./debian/usr/bin")
     strip_binary("./debian/usr/bin/hod")
-    FileUtils.copy("./doc/hod.1.gz", "./debian/usr/share/man/man1")
+    FileUtils.copy("./docs/hod.1.gz", "./debian/usr/share/man/man1")
 
     file = "./debian/usr/share/doc/hod/changelog"
     FileUtils.copy("./changelog.debian", file)
@@ -137,7 +137,7 @@ EOD
   end
 
   def get_package_name
-    pname = "hod_#{@prog_ver}-ubuntu_i386.deb"
+    pname = "hod_#{@prog_ver}-ubuntu_amd64.deb"
     @package_name = pname
     return pname
   end
